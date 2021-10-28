@@ -7,7 +7,7 @@ import { useHistory } from "react-router-dom";
 
 // 若是给函数参数指定类型，那就成了强类型， 外部如果不传都会报错
 export const BaseApi = ({ method = 'get', header = {}, params = {}, path = '' }) => {
-  // console.log('查看BaseApi', method, header, params);
+  console.log('查看BaseApi', method, header, params);
 
   // let history = useHistory();
   let promise = new Promise((reslove, reject) => {

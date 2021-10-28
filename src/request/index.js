@@ -41,6 +41,25 @@ export const addmenu = async (option) => {
     method: 'post',
     header: commonHeaders()
   }))
-  console.log('res---》', res);
   return res
 }
+
+export const editmenu = async (option) => {
+  const res = await BaseApi(merge(option, {
+    path: '/api/menuedit',
+    method: 'post',
+    header: commonHeaders()
+  }))
+  return res
+}
+export const delmenu = async (option) => {
+  console.log('option',option);
+  const res = await BaseApi(merge(option, {
+    path: '/api/menudelete',
+    method: 'post',
+    header: commonHeaders()
+  }))
+  console.log('res---删除接口》', res);
+  return res
+}
+

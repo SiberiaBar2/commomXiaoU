@@ -12,11 +12,13 @@ import './index.css'
 const Login = ({
   initMethod
 }) => {
-  
+
   let history = useHistory();
   const onFinish = async (values) => {
     const { username, password } = values
     let result = await userLogin({ params: { username, password } })
+    console.log('result----登录', result);
+
     if (result) {
       // 都没存进去，拿个毛线 
       sessionStorage.setItem('userinfo', JSON.stringify(result.data.list))

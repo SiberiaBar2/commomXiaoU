@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, forwardRef, useImperativeHandle } from 'react';
 import {
   Modal,
   Button,
@@ -16,16 +16,44 @@ const { Option } = Select;
 const Popup = ({
   show,
   closeModal,
-  treeTitle
-}) => {
+  treeTitle,
+}, ref) => {
   const [pano, setPano] = useState('')   // 名称
   const [panI, setPanI] = useState('')   // 图标
   const [value, setValue] = useState(1); // 状态 1 正常 2 禁用
-
-  const [panetwoSel, setPanetwoSel] = useState('请选择')  // 上级
+  
+  const [itemid, setItemId] = useState(0)
+  const [panetwoSel, setPanetwoSel] = useState('请选择')  // 由于select变化的关系， 只能保存上级 
   const [panta, setPanta] = useState('')            // 地址
   const [pane, setPane] = useState(1)               // tab 切换的值
-  
+  const [addOrEdit, setAddOrEdit] = useState('')
+  //react规定，必须使用useImperativeHandle方法，来保存并抛出想要传递给父组件的方法或者数据，
+  // 第一个参数是ref,第二个参数是函数，返回想要抛出的对象集合
+  useImperativeHandle(ref, () => ({
+    modalData,
+  }));
+
+  // 回显
+  const modalData = (val, type) => {
+    console.log('说啥呢', val, type);
+    // 如果是修改就回显
+    if (val && type === 'edit') {
+      setPano(val.title)
+      setPanI(val.icon)
+      setPanetwoSel(() => {
+        return val.pid === 0 ? '请选择' : val.pid
+      })
+      setItemId(val.id)
+      setValue(val.status)
+      setPanta(val.url)
+      setPane(val.type)
+    }else {
+      // 否则就清空表单
+      resetData()
+    }
+    // 无论新增还是修改 type都必须保存下来
+    setAddOrEdit(type)
+  }
   // const {} = treeTitle
   const callback = (key) => {
     console.log(key);
@@ -60,15 +88,28 @@ const Popup = ({
   const onSearch = (val) => {
     console.log('search:', val);
   }
-
-
+  
+  // 重置数据
+  const resetData = () => {
+    setPano('')
+    setPanI('')
+    setValue(1)
+    setPanetwoSel('')
+    setPanta()
+    setPane(1)
+    setAddOrEdit('')
+    setItemId('')
+  }
   // 打开 关闭 弹框
   const handleOk = () => {
-    // 新建 修改 数据
+    // 新建 、修改 数据
     let createNew = {}
     console.log('keyChange', pane);
+    console.log('addOrEdit', addOrEdit);
     // 数据类型不对都不行 ，对象都会无法赋值
-    // 判断是添加为一级还是二级
+    // 判断是添加为一级还是二级  1 为目录 写死， 其他情况 为上级就动态选择
+    console.log('pane',pane);
+    
     let oneOrTwo = pane === 1 ? 0 : panetwoSel
     createNew = {
       pid: oneOrTwo,
@@ -78,13 +119,12 @@ const Popup = ({
       url: panta,
       type: pane
     }
-    console.log('createNew', createNew);
-    // setPano('')
-    // setPanI('')
-    // setValue(1)
-    // setPanetwoSel('')
-    // setPanta()
-    closeModal(createNew)
+    if(addOrEdit === 'edit'){
+      createNew.id = itemid
+    }
+    console.log('createNew, addOrEdit', createNew, addOrEdit);
+    
+    closeModal(createNew, addOrEdit)
   };
 
   const handleCancel = () => {
@@ -107,9 +147,10 @@ const Popup = ({
       return e.target.value
     })
   };
+
   const renderPano = () => {
     // 居然可以拿到实时的
-    console.log('pane----->', pane)
+    // console.log('pane----->', pane)
     return (
       <>
         <Input
@@ -187,7 +228,6 @@ const Popup = ({
         <Tabs
           value={pane}
           className={cx('tabpane')}
-          // defaultActiveKey="1"
           onChange={callback}>
           <TabPane tab="目录" key="1">
             {renderPano()}
@@ -200,5 +240,5 @@ const Popup = ({
     </div>
   )
 }
-
-export default Popup
+//必须通过forwardRef方法抛出函数组件
+export default forwardRef(Popup)

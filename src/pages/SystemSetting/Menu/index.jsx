@@ -1,5 +1,17 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react'
-import { Table, Button, Tag } from 'antd'
+import React, {
+  useState,
+  useEffect,
+  useMemo,
+  useCallback,
+  useRef
+} from 'react'
+import {
+  Table,
+  Button,
+  Tag,
+  Popconfirm,
+  message
+} from 'antd'
 import Popup from 'pages/conponents/Popup'
 import {
   ToolOutlined,
@@ -7,21 +19,25 @@ import {
 } from '@ant-design/icons';
 import {
   menuList,
-  addmenu
+  addmenu,
+  editmenu,
+  delmenu
 } from 'request'
 import cx from 'classnames'
 import './index.css'
-import { logDOM } from '@testing-library/dom';
+
 
 const Menu = (props) => {
   const [show, setShow] = useState(false)
   const [treeList, setTreeList] = useState([])
+  const Modalref = useRef()
   useEffect(() => {
     menuTree()
   }, [])
   const menuTree = async () => {
     const res = await menuList({})
     console.log('res- 树形结尾狗-->', res)
+    console.log('Modalref', Modalref);
     // let copyList = JSON.parse(JSON.stringify(res.list))
     // let addKey = copyList.map(item => {
     //   let obj = {}
@@ -31,6 +47,22 @@ const Menu = (props) => {
     // console.log('addKey', addKey);
 
     res.list && setTreeList(res.list)
+
+
+  }
+
+
+  const confirm = async (val) => {
+    console.log('record', val.id);
+
+
+    let res = await delmenu({ params: { id: val.id } })
+    // message.success('Click on Yes');
+  }
+
+  const cancel = (e) => {
+    console.log(e);
+    message.error('Click on No');
   }
   // 取数组对象中所需要的
   // let treeTitle = treeList.map(item => {
@@ -69,17 +101,29 @@ const Menu = (props) => {
     // console.log('item', arr[key]);
     // return {...}
   }
-  const openModal = () => {
-    // console.log('ccccccccccccccccccc');
+  const openModal = (record, type) => {
+    console.log('record, type', record, type);
 
+    // 若传递了数据，就是点击修改，其他情况为新增
+    if (type === 'edit') {
+      Modalref.current.modalData(record, type)
+    } else if (type === 'add') {
+      Modalref.current.modalData(null, type)
+    }
     setShow(true)
   }
   const closeModal = useCallback(
-    async (val) => {
-      let params = { ...val }
-      let res = await addmenu({ params })
-      console.log('result----addmenu', res);
+    async (val, addOrEdit) => {
+      console.log('val, addOrEdit',val, addOrEdit);
 
+      let params = { ...val }
+      if (addOrEdit === 'add') {
+        let res = await addmenu({ params })
+        console.log('result----addmenu', res);
+      } else if (addOrEdit === 'edit') {
+        let res = await editmenu({ params })
+        console.log('result----editmenu', res);
+      }
       setShow(false)
     },
     [],
@@ -88,7 +132,7 @@ const Menu = (props) => {
   return (
     <div className={cx('menu-list')}>
       <div className={cx('list-top')}>
-        <Button type="primary" onClick={openModal}>新增</Button>
+        <Button ref={Modalref} type="primary" onClick={() => openModal('record', 'add')}>新增</Button>
       </div>
       <div className={cx('list-content')}>
         <Table
@@ -179,15 +223,23 @@ const Menu = (props) => {
               return <div
                 key={record.id}
                 className={cx('list-icon')}>
-                <ToolOutlined onClick={openModal} />
-                <ClearOutlined />
+                <ToolOutlined onClick={() => openModal(record, 'edit')} />
+                <Popconfirm
+                  title="确定要删除吗?"
+                  onConfirm={() => confirm(record)}
+                  onCancel={cancel}
+                  okText="Yes"
+                  cancelText="No"
+                >
+                  <ClearOutlined />
+                </Popconfirm>
               </div>
             }
           }
           ]}
         />
       </div>
-      <Popup treeTitle={treeList} show={show} closeModal={closeModal} />
+      <Popup ref={Modalref} treeTitle={treeList} show={show} closeModal={closeModal} />
     </div>
   )
 }
