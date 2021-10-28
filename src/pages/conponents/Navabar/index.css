@@ -1,0 +1,17 @@
+.navabar {
+  height: 100%;
+}
+.navabar .nav-menu {
+  height: calc(100% - 60px);
+}
+.nav-btn-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #001529;
+  height: 40px;
+  transition: 0.26s;
+}
+.nav-btn-wrap .nav-btn-pri {
+  margin: 0 !important;
+}

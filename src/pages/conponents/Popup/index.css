@@ -1,0 +1,30 @@
+.ant-modal-body {
+  padding: 5px 24px ;
+}
+.ant-modal-body .popup-inp {
+  padding: 12px 15px;
+}
+.ant-modal-body .popup-sel {
+  margin-left: 5px;
+  width: 250px;
+}
+.ant-modal-body .popup-radio,
+.ant-modal-body .popup-selo {
+  display: flex;
+  flex-direction: row;
+  padding: 12px 15px;
+}
+.ant-modal-body .popup-radio .radio-status,
+.ant-modal-body .popup-selo .radio-status {
+  width: 51px;
+  margin-left: 10px;
+}
+.ant-modal-body .popup-selo {
+  padding: 0;
+}
+.ant-modal-body .popup-selo .popup-up {
+  width: 51px;
+  margin-left: 10px;
+  text-align: center;
+  line-height: 32px;
+}
