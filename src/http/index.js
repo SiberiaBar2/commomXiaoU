@@ -14,59 +14,47 @@ export const BaseApi = ({ method = 'get', header = {}, params = {}, path = '' })
     let option = {
       url: path,
       method,
-      timeout: 120000,
-      // headers:header, 
-      // authorization: ''
+      timeout: 120000
     }
 
-    let options = option 
+    let options = option
 
     if (method === 'get') {
       options.params = params
     } else if (['post', 'put'].includes(method)) {
       options.data = params
     }
-
     if (header['Content-Type']) {
       header['Content-Type'] = 'application/json'
     }
-    // const userInfo = sessionStorage.getItem('userinfo') || '{}'
-    // const userInfos = JSON.parse(userInfo) as tokenType
-    // 将登录凭证通过自定义请求头发送给数据接口
-    // options.headers.authorization = userInfos.token
-    // options.headers.header = header
-    // Object.defineProperty(options.headers, 'header', {
-    //   value: header
-    // })
-    // Object.defineProperty(options.headers, 'authorization', { 
-    //   value: userInfos.token
-    // })
+
     console.log('options', options);
 
     axios.interceptors.request.use((config) => {
       if (config) {
         const userInfo = JSON.parse(sessionStorage.getItem('userinfo')) || '{}'
-        console.log('userInfo',userInfo);
+        console.log('userInfo', userInfo);
         // 将登录凭证通过自定义请求头发送给数据接口
         config.headers.authorization = userInfo.token
-        console.log('config.headers',config.headers)
+        console.log('config.headers', config.headers)
         return config
       }
     })
 
     // axios.interceptors.response.use((config) => {
-    //   // if (config.data) { // 对象可能未定义，那就就套两层判断！！
-    //     if (config.data.code !== 200) {
-    //       message.error('返回数据异常！', 2, () => {
-    //         console.log('返回异常');
-    //       })
-    //     // }
-    //     if (config.data.code === 403) {
-    //       message.error('请登录', 2, () => {
-    //         console.log('重新登录');
-    //       })
-    //       // history.push('/login')
-    //     }
+    //   console.log('config-data', config);
+    //   if ((config.data.code !== 200) || (config.code === 403)) {
+    //     message.error('返回数据异常！', 2, () => {
+    //       console.log('返回异常');
+    //     })
+    //     return
+    //   } else if ((config.data.code === 403) || (config.code === 403)) {
+    //     message.error('请登录', 2, () => {
+    //       console.log('请重新登录');
+    //     })
+    //     return
+    //     // history.push('/login')
+    //   } else {
     //     return config.data
     //   }
     // })

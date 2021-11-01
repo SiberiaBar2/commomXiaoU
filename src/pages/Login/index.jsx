@@ -17,10 +17,7 @@ const Login = ({
   const onFinish = async (values) => {
     const { username, password } = values
     let result = await userLogin({ params: { username, password } })
-    console.log('result----登录', result);
-
     if (result) {
-      // 都没存进去，拿个毛线 
       sessionStorage.setItem('userinfo', JSON.stringify(result.data.list))
       message.success(result.data.msg, 2)
       history.push(`/layout`);

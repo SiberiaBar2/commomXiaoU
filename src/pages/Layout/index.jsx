@@ -15,6 +15,7 @@ const Layout = (props) => {
     allData,
     location
   } = props
+  // 所有路由配置相关的都会在props上
   console.log('props', props);
   const { pathname } = location
   useEffect(() => {
@@ -62,8 +63,7 @@ const Layout = (props) => {
   return (
     <div className={cx('layout')}>
       <div className={cx('layouTop')}>
-        <div
-          className={cx('lay-top-left')}
+        <div className={cx('lay-top-left')}
           style={{ width: headerWidth ? 80 : 226 }}>xiaoU</div>
         <div className={cx('lay-top-right')}>
           <div className={cx('breade-left')}></div>

@@ -15,6 +15,7 @@ const commonHeaders = () => {
   return { 'Content-Type': 'application/json' }
 }
 
+// 登录
 // 为什么接收参数那里是headers就可以，header就是对象？
 export const userLogin = async (option) => {
   console.log('option', option);
@@ -23,9 +24,11 @@ export const userLogin = async (option) => {
     method: 'post',
     header: commonHeaders()
   }))
+  console.log('resd' ,res);
   return res
 }
 
+// 菜单管理
 export const menuList = async (option) => {
   const res = await BaseApi(merge(option, {
     path: '/api/menulist?istree=1',
@@ -59,7 +62,17 @@ export const delmenu = async (option) => {
     method: 'post',
     header: commonHeaders()
   }))
-  console.log('res---删除接口》', res);
+  return res
+}
+// 角色管理
+export const rolelist = async (option) => {
+  console.log('option',option);
+  const res = await BaseApi(merge(option, {
+    path: '/api/rolelist',
+    method: 'get',
+    header: commonHeaders()
+  }))
+  console.log('res----角色列表', res);
   return res
 }
 

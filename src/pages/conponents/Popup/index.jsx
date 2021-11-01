@@ -21,7 +21,7 @@ const Popup = ({
   const [pano, setPano] = useState('')   // 名称
   const [panI, setPanI] = useState('')   // 图标
   const [value, setValue] = useState(1); // 状态 1 正常 2 禁用
-  
+
   const [itemid, setItemId] = useState(0)
   const [panetwoSel, setPanetwoSel] = useState('请选择')  // 由于select变化的关系， 只能保存上级 
   const [panta, setPanta] = useState('')            // 地址
@@ -41,20 +41,21 @@ const Popup = ({
       setPano(val.title)
       setPanI(val.icon)
       setPanetwoSel(() => {
-        return val.pid === 0 ? '请选择' : val.pid
+        return val.pid === 0
+          ? '请选择'
+          : val.pid
       })
       setItemId(val.id)
       setValue(val.status)
       setPanta(val.url)
       setPane(val.type)
-    }else {
+    } else {
       // 否则就清空表单
       resetData()
     }
     // 无论新增还是修改 type都必须保存下来
     setAddOrEdit(type)
   }
-  // const {} = treeTitle
   const callback = (key) => {
     console.log(key);
     setPane(() => {
@@ -88,7 +89,7 @@ const Popup = ({
   const onSearch = (val) => {
     console.log('search:', val);
   }
-  
+
   // 重置数据
   const resetData = () => {
     setPano('')
@@ -102,14 +103,14 @@ const Popup = ({
   }
   // 打开 关闭 弹框
   const handleOk = () => {
-    // 新建 、修改 数据
+    // 新建 、修改数据
     let createNew = {}
     console.log('keyChange', pane);
     console.log('addOrEdit', addOrEdit);
     // 数据类型不对都不行 ，对象都会无法赋值
-    // 判断是添加为一级还是二级  1 为目录 写死， 其他情况 为上级就动态选择
-    console.log('pane',pane);
-    
+    //  1 为目录 表示添加最高一个层级的 写死， 其他情况为上级，就动态选择
+    console.log('pane', pane);
+
     let oneOrTwo = pane === 1 ? 0 : panetwoSel
     createNew = {
       pid: oneOrTwo,
@@ -119,11 +120,12 @@ const Popup = ({
       url: panta,
       type: pane
     }
-    if(addOrEdit === 'edit'){
+    // 如果为是修改，就再加一个字段
+    if (addOrEdit === 'edit') {
       createNew.id = itemid
     }
     console.log('createNew, addOrEdit', createNew, addOrEdit);
-    
+
     closeModal(createNew, addOrEdit)
   };
 

@@ -12,7 +12,7 @@ import {
   Popconfirm,
   message
 } from 'antd'
-import Popup from 'pages/conponents/Popup'
+// import Popup from 'pages/conponents/Popup'
 import {
   ToolOutlined,
   ClearOutlined
@@ -26,6 +26,8 @@ import {
 import cx from 'classnames'
 import './index.css'
 
+const Popup =  React.lazy(() => import('pages/conponents/Popup'))
+
 
 const Menu = (props) => {
   const [show, setShow] = useState(false)
@@ -38,72 +40,23 @@ const Menu = (props) => {
     const res = await menuList({})
     console.log('res- 树形结尾狗-->', res)
     console.log('Modalref', Modalref);
-    // let copyList = JSON.parse(JSON.stringify(res.list))
-    // let addKey = copyList.map(item => {
-    //   let obj = {}
-    //   obj['key'] = item.id
-    //   return { ...item, ...obj }
-    // })
-    // console.log('addKey', addKey);
-
     res.list && setTreeList(res.list)
-
-
   }
 
 
   const confirm = async (val) => {
-    console.log('record', val.id);
-
-
-    let res = await delmenu({ params: { id: val.id } })
-    // message.success('Click on Yes');
+    await delmenu({ params: { id: val.id } })
+    await menuTree()
+    message.success('删除成功！');
   }
 
   const cancel = (e) => {
     console.log(e);
     message.error('Click on No');
   }
-  // 取数组对象中所需要的
-  // let treeTitle = treeList.map(item => {
-  //   let obj = {}
-  //   obj['title'] = item.title
-  //   obj['id'] = item.id
-  //   return obj
-  // })
-  // console.log('treeTitle', treeTitle);
 
-  let arr = [
-    { name: '牛恒', age: 178, sex: '男' },
-    { name: '牛恒', age: 178, sex: '男' },
-    { name: '牛恒', age: 178, sex: '男' },
-  ]
-
-  let str = [
-    { what: '什么呢' },
-    { how: '是的呀' },
-    { why: '嗨呀呀' },
-  ]
-
-  let resOne = arr.map((item, index) => {
-    return { ...item, ...str[index] }
-  })
-  // console.log('人的呢', resOne);
-
-  // console.log('treeTitle', treeTitle);
-
-  let str1 = { what: '什么呢', how: '是的呀', why: '嗨呀呀' }
-  // console.log('Object.keys(str1)', Object.keys(str1));
-  // console.log('Object.keys(str1)', Object.values(str1));
-
-  for (let key in arr) {
-    // console.log('key', key);
-    // console.log('item', arr[key]);
-    // return {...}
-  }
   const openModal = (record, type) => {
     console.log('record, type', record, type);
-
     // 若传递了数据，就是点击修改，其他情况为新增
     if (type === 'edit') {
       Modalref.current.modalData(record, type)
@@ -112,22 +65,19 @@ const Menu = (props) => {
     }
     setShow(true)
   }
+
   const closeModal = useCallback(
     async (val, addOrEdit) => {
-      console.log('val, addOrEdit',val, addOrEdit);
-
       let params = { ...val }
       if (addOrEdit === 'add') {
-        let res = await addmenu({ params })
-        console.log('result----addmenu', res);
+        await addmenu({ params })
+        await menuTree()
       } else if (addOrEdit === 'edit') {
-        let res = await editmenu({ params })
-        console.log('result----editmenu', res);
+        await editmenu({ params })
+        await menuTree()
       }
       setShow(false)
-    },
-    [],
-  )
+    },[])
 
   return (
     <div className={cx('menu-list')}>
@@ -142,6 +92,7 @@ const Menu = (props) => {
           rowKey={record => {
             return record.id
           }}
+          // 展开下级相关属性
           expandable={{
             // expandedRowRender: record => {
             //   console.log('record for children', record);
@@ -167,6 +118,7 @@ const Menu = (props) => {
             title: 'ID',
             dataIndex: 'id',
             width: '10%',
+            // 这种方式优先级最高
             render: (text, record, index) => {
               return <Tag
                 key={record.id}
@@ -239,7 +191,11 @@ const Menu = (props) => {
           ]}
         />
       </div>
-      <Popup ref={Modalref} treeTitle={treeList} show={show} closeModal={closeModal} />
+      <Popup
+        show={show}
+        ref={Modalref}
+        treeTitle={treeList}
+        closeModal={closeModal} />
     </div>
   )
 }

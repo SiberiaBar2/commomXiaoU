@@ -5,7 +5,7 @@ import { Spin } from 'antd'
 import { HashRouter as Router, NavLink } from 'react-router-dom'
 
 const Summary = (props) => {
-  return (
+  return (    
     <Router>
       <Suspense fallback={<div style={{ textAlign: 'center' }}><Spin size="large" /></div>}>
         <RouterView routes={routes} />
