@@ -27,6 +27,7 @@ const Login = ({
 
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
+    message.error('登录失败', 2)
   };
 
   return (
@@ -80,7 +81,6 @@ const Login = ({
 
 export default connect(
   () => {
-    console.log('高阶组件')
     return {}
   },
   {

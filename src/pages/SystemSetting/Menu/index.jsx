@@ -10,7 +10,8 @@ import {
   Button,
   Tag,
   Popconfirm,
-  message
+  message,
+  Divider
 } from 'antd'
 // import Popup from 'pages/conponents/Popup'
 import {
@@ -84,6 +85,7 @@ const Menu = (props) => {
       <div className={cx('list-top')}>
         <Button ref={Modalref} type="primary" onClick={() => openModal('record', 'add')}>新增</Button>
       </div>
+      <Divider>Menu</Divider>
       <div className={cx('list-content')}>
         <Table
           className="common-table"

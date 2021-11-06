@@ -1,0 +1,10 @@
+.edit {
+  color: #83cdd9;
+  font-size: 30px;
+  cursor: pointer;
+}
+.del {
+  color: #fc011a;
+  font-size: 30px;
+  cursor: pointer;
+}

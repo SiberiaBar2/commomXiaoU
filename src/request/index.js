@@ -2,8 +2,6 @@
 import { BaseApi } from 'http/index'
 // import { BaseApi } from 'http'
 
-console.log('BaseApi', BaseApi);
-
 const merge = (option = {}, baseOption = {}) => {
   return Object.assign({}, option, baseOption)
 }

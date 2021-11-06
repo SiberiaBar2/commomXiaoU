@@ -36,7 +36,9 @@ const Navabar = ({
     <div
       className={cx('navabar')}
       style={{ width: collapsed ? 80 : 226 }}>
-      <div className={cx('nav-btn-wrap')} style={{ width: collapsed ? 80 : 226 }}>
+      <div
+        className={cx('nav-btn-wrap')}
+        style={{ width: collapsed ? 80 : 226 }}>
         <Button
           type="primary"
           className={cx('nav-btn-pri')}
@@ -66,7 +68,10 @@ const Navabar = ({
         {
           menus && menus.map((item) => {
             return (
-              <SubMenu key={item.id} icon={<MailOutlined />} title={item.title}>
+              <SubMenu
+                key={item.id}
+                icon={<MailOutlined />}
+                title={item.title}>
                 {
                   item
                   && item.children
@@ -74,7 +79,9 @@ const Navabar = ({
                     return (
                       <Menu.Item
                         key={ele.id}
-                        onClick={() => history.push(`/layout${ele.url}`)}>{ele.title}</Menu.Item>
+                        onClick={() => history.push(`/layout${ele.url}`)}>
+                        {ele.title}
+                      </Menu.Item>
                     )
                   })}
               </SubMenu>

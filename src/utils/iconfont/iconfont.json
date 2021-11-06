@@ -1,0 +1,128 @@
+{
+  "id": "2918943",
+  "name": "commonXiaoyou",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "1117",
+      "name": "剪切",
+      "font_class": "jianqie",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "1270",
+      "name": "错误",
+      "font_class": "cuowu",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "145432",
+      "name": "删除",
+      "font_class": "shanchu",
+      "unicode": "e629",
+      "unicode_decimal": 58921
+    },
+    {
+      "icon_id": "145719",
+      "name": "删除_填充",
+      "font_class": "shanchutianchong",
+      "unicode": "e68c",
+      "unicode_decimal": 59020
+    },
+    {
+      "icon_id": "521051",
+      "name": "修改",
+      "font_class": "xiugai",
+      "unicode": "e620",
+      "unicode_decimal": 58912
+    },
+    {
+      "icon_id": "567336",
+      "name": "修改",
+      "font_class": "xiugai1",
+      "unicode": "e650",
+      "unicode_decimal": 58960
+    },
+    {
+      "icon_id": "2076383",
+      "name": "表单控件 删除",
+      "font_class": "biaodankongjianshanchu",
+      "unicode": "e8c1",
+      "unicode_decimal": 59585
+    },
+    {
+      "icon_id": "3782933",
+      "name": "修改",
+      "font_class": "xiugai2",
+      "unicode": "e612",
+      "unicode_decimal": 58898
+    },
+    {
+      "icon_id": "4343836",
+      "name": "修改",
+      "font_class": "xiugai3",
+      "unicode": "e698",
+      "unicode_decimal": 59032
+    },
+    {
+      "icon_id": "5387543",
+      "name": "删除",
+      "font_class": "shanchu1",
+      "unicode": "eafb",
+      "unicode_decimal": 60155
+    },
+    {
+      "icon_id": "5387882",
+      "name": "品类删除_o",
+      "font_class": "pinleishanchu_o",
+      "unicode": "eb7e",
+      "unicode_decimal": 60286
+    },
+    {
+      "icon_id": "7091367",
+      "name": "修改",
+      "font_class": "xiugai4",
+      "unicode": "e62c",
+      "unicode_decimal": 58924
+    },
+    {
+      "icon_id": "10278111",
+      "name": "修改",
+      "font_class": "xiugai5",
+      "unicode": "e607",
+      "unicode_decimal": 58887
+    },
+    {
+      "icon_id": "11833601",
+      "name": "修改",
+      "font_class": "xiugai6",
+      "unicode": "e60f",
+      "unicode_decimal": 58895
+    },
+    {
+      "icon_id": "16563867",
+      "name": "修改、修改资料",
+      "font_class": "cangpeitubiao_xiugaixiugaiziliao",
+      "unicode": "e625",
+      "unicode_decimal": 58917
+    },
+    {
+      "icon_id": "21243181",
+      "name": "修改",
+      "font_class": "xiugai7",
+      "unicode": "e654",
+      "unicode_decimal": 58964
+    },
+    {
+      "icon_id": "22382900",
+      "name": "修改",
+      "font_class": "xiugai8",
+      "unicode": "edd2",
+      "unicode_decimal": 60882
+    }
+  ]
+}
