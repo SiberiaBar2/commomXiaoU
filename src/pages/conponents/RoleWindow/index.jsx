@@ -1,5 +1,4 @@
-import React,
-{
+import React, {
   useState,
   useEffect,
   forwardRef,
@@ -16,10 +15,8 @@ import {
 } from 'request'
 import './index.css'
 const RoleWindow = (props, ref) => {
-
   const [eventType, setEventType] = useState('')
   const [expandedKeys, setExpandedKeys] = useState([]);
-  // const [checkedKeys, setCheckedKeys] = useState([]);
   const [selectedKeys, setSelectedKeys] = useState([]);
   const [autoExpandParent, setAutoExpandParent] = useState(true);
   const [treeData, setTreeData] = useState([])
@@ -35,16 +32,14 @@ const RoleWindow = (props, ref) => {
     showWindow,
     closeWindow
   } = props
-
   useEffect(() => {
     getMenuList()
   }, []);
-
   useImperativeHandle(ref, () => ({
     roleData,
   }));
   const roleData = (val, type) => {
-    if (val) {
+    if (val && type === 'Roledit') {
       const { menus } = val
       const defaultKeys = menus.split(',')
       setState(() => {
@@ -55,7 +50,15 @@ const RoleWindow = (props, ref) => {
           status: val.status
         }
       })
-      // setCheckedKeys(defaultKeys)
+    } else {
+      setState(() => {
+        return {
+          id: 0,
+          rolename: '',
+          menus: [],
+          status: 1
+        }
+      })
     }
     setEventType(type)
   }
@@ -75,46 +78,37 @@ const RoleWindow = (props, ref) => {
     const result = await menuList({})
     const { list } = result
     const copyTreeData = JSON.parse(JSON.stringify(list))
-
     let addWords = copyTreeData.map((item) => {
       let emptyObj = {}
       emptyObj['key'] = item.id.toString()
       item.children = chilDrenData(item.children)
-
       return { ...item, ...emptyObj }
     })
     addWords && setTreeData(addWords)
   }
 
-
   const onExpand = (expandedKeysValue) => {
     console.log('onExpand', expandedKeysValue); // if not set autoExpandParent to false, if children expanded, parent can not collapse.
     // or, you can remove all expanded children keys.
-
     setExpandedKeys(expandedKeysValue);
     setAutoExpandParent(false);
   };
-
   const onCheck = (checkedKeysValue) => {
-    console.log('onCheck', checkedKeysValue);
     windowDataChange('menus', checkedKeysValue)
   };
-
   const onSelect = (selectedKeysValue, info) => {
     console.log('onSelect', info);
     setSelectedKeys(selectedKeysValue);
   };
-
   const handleOk = () => {
-    closeWindow(false)
+    closeWindow(state, eventType)
   };
 
   const handleCancel = () => {
-    closeWindow(false)
+    closeWindow()
   };
-
   const roleNameChange = (value) => {
-    console.log('value', value);
+    windowDataChange('rolename', value)
   }
 
   const radioChange = e => {
@@ -123,8 +117,8 @@ const RoleWindow = (props, ref) => {
   const windowDataChange = (attrs, setAttr) => {
     setState((state) => {
       // 加JSON.parse 按钮才可切换
+      // log前后信息不一致
       let newState = JSON.parse(JSON.stringify(state))
-      // log信息不一致
       Object.defineProperty(newState, attrs, {
         value: setAttr,
         writable: true

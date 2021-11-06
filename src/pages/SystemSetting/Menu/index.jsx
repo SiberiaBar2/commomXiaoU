@@ -39,8 +39,6 @@ const Menu = (props) => {
   }, [])
   const menuTree = async () => {
     const res = await menuList({})
-    console.log('res- 树形结尾狗-->', res)
-    console.log('Modalref', Modalref);
     res.list && setTreeList(res.list)
   }
 

@@ -16,13 +16,11 @@ const commonHeaders = () => {
 // 登录
 // 为什么接收参数那里是headers就可以，header就是对象？
 export const userLogin = async (option) => {
-  console.log('option', option);
   let res = await BaseApi(merge(option, {
     path: '/api/userlogin',
     method: 'post',
     header: commonHeaders()
   }))
-  console.log('resd' ,res);
   return res
 }
 
@@ -64,13 +62,39 @@ export const delmenu = async (option) => {
 }
 // 角色管理
 export const rolelist = async (option) => {
-  console.log('option',option);
   const res = await BaseApi(merge(option, {
     path: '/api/rolelist',
     method: 'get',
     header: commonHeaders()
   }))
-  console.log('res----角色列表', res);
+  return res
+}
+export const roleadd = async (option) => {
+  const res = await BaseApi(merge(option, {
+    path: '/api/roleadd',
+    method: 'post',
+    header: commonHeaders()
+  }))
+  return res
+}
+export const roleedit = async (option) => {
+  console.log('option',option);
+  const res = await BaseApi(merge(option, {
+    path: '/api/roleedit',
+    method: 'post',
+    header: commonHeaders()
+  }))
+  console.log('res----角色修改', res);
+  return res
+}
+export const roledel = async (option) => {
+  console.log('option',option);
+  const res = await BaseApi(merge(option, {
+    path: '/api/roledelete',
+    method: 'post',
+    header: commonHeaders()
+  }))
+  console.log('res----角色删除', res);
   return res
 }
 

@@ -19,7 +19,6 @@ const Navabar = ({
   navUseFunction,
   menus
 }) => {
-  console.log('menus', menus)
   const [collapsed, setCollapsed] = useState(false)
 
   let history = useHistory();

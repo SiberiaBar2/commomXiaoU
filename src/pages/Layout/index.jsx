@@ -11,18 +11,16 @@ import './index.css'
 const Layout = (props) => {
   const [headerWidth, setHeaderWidth] = useState(false)
   const {
-    match,
     allData,
     location
   } = props
   // 所有路由配置相关的都会在props上
-  console.log('props', props);
   const { pathname } = location
   useEffect(() => {
   }, [])
-  // 取出二级路由
-  const nowRouterPath = match && match.path
-  const sercondRouter = routes.findIndex(item => item.path === nowRouterPath)
+
+  // 取出二级路由数组
+  const sercondRouter = routes.findIndex(item => item.path === '/layout')
   const secondChildren = sercondRouter !== -1 && routes[sercondRouter].children
 
   const navUseFunction = (val) => {
@@ -30,7 +28,6 @@ const Layout = (props) => {
   }
 
   const { NavabarData } = allData
-
   const { menus, username } = NavabarData
   const renderNav = () => {
     return (
@@ -78,11 +75,10 @@ const Layout = (props) => {
   )
 }
 
-export default connect(
-  (state) => {
-    return {
-      allData: state
-    }
-  }, {
+export default connect((state) => {
+  return {
+    allData: state
+  }
+}, {
   initMethod
 })(Layout)

@@ -9,7 +9,17 @@ const NavabarData = (state = InitData, action) => {
   switch (action.type) {
     case 'init':
       const { data } = action
-      console.log('data啊', data);
+      return data
+
+    default:
+      return state
+  }
+}
+const otherSdata = (state = [], action) => {
+  switch (action.type) {
+    case 'init':
+      console.log('otherSdata的init', action);
+      const { data } = action
       return data
 
     default:
@@ -18,5 +28,6 @@ const NavabarData = (state = InitData, action) => {
 }
 
 export default combineReducers({
-  NavabarData
+  NavabarData,
+  otherSdata
 })

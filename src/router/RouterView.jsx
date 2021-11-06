@@ -1,13 +1,8 @@
 import { Switch, Route, Redirect } from 'react-router-dom'
-// import { routerList } from 'constants/index'
 
-const RouterView= ({
-  routes,
-  flag
+const RouterView = ({
+  routes
 }) => {
-
-  // console.log('routerList', routerList[0])
-  console.log('routes呵呵呵', routes)
   return (
     <Switch>
       {

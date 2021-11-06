@@ -26,15 +26,11 @@ export const BaseApi = ({ method = 'get', header = {}, params = {}, path = '' })
       header['Content-Type'] = 'application/json'
     }
 
-    console.log('options', options);
-
     axios.interceptors.request.use((config) => {
       if (config) {
         const userInfo = JSON.parse(sessionStorage.getItem('userinfo')) || '{}'
-        console.log('userInfo', userInfo);
         // 将登录凭证通过自定义请求头发送给数据接口
         config.headers.authorization = userInfo.token
-        console.log('config.headers', config.headers)
         return config
       }
     })
