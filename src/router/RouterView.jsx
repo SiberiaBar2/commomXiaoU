@@ -1,23 +1,30 @@
-import { Switch, Route, Redirect } from 'react-router-dom'
-
+import { Routes, Route } from 'react-router-dom'
 const RouterView = ({
   routes
 }) => {
+  const commonRender = ({ item, index }, type) => {
+    return (
+      item.component &&
+      (
+        type
+          ? <Route key={index} path={`${item.path}/*`} exact={item.exact} element={<item.component />} />
+          : <Route key={index} path={item.path} exact={item.exact} element={<item.component />} />
+      )
+    )
+  }
+
   return (
-    <Switch>
-      {
-        (routes.map((item, index) => {
-          if (item.component) {
-            return <Route key={index} path={item.path} exact={item.exact} component={item.component} />
+    <>
+      <Routes>
+        {routes.map((item, index) => {
+          if (item.hasOwnProperty('children')) {
+            return commonRender({ item, index }, 'sec')
           } else {
-            return <Route key={index} path={item.path} exact={item.exact}>
-              <Redirect to={item.to} />
-            </Route>
+            return commonRender({ item, index })
           }
-        })
-        )
-      }
-    </Switch>
+        })}
+      </Routes>
+    </>
   )
 }
 

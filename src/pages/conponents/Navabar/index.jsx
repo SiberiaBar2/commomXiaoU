@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Menu, Button } from 'antd';
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import cx from 'classnames'
 import {
   AppstoreOutlined,
@@ -20,8 +20,8 @@ const Navabar = ({
   menus
 }) => {
   const [collapsed, setCollapsed] = useState(false)
-
-  let history = useHistory();
+  let navigate = useNavigate();
+  // let history = useHistory();
 
   const toggleCollapsed = () => {
     setCollapsed(collapsed => {
@@ -60,7 +60,7 @@ const Navabar = ({
       >
         <Menu.Item
           key="only"
-          onClick={() => history.push('/layout')}
+          onClick={() => navigate('/layout')}
           icon={<PieChartOutlined />} >
           管理中心
         </Menu.Item>
@@ -78,7 +78,8 @@ const Navabar = ({
                     return (
                       <Menu.Item
                         key={ele.id}
-                        onClick={() => history.push(`/layout${ele.url}`)}>
+                        onClick={() => navigate(`/layout${ele.url}`)}
+                        >
                         {ele.title}
                       </Menu.Item>
                     )

@@ -26,84 +26,86 @@ const Echarts = React.lazy(() => import('pages/DemoTest/Echarts'))
 
 
 const routes = [
-  // 重定
+  // 重定 在v6后不知道怎么用了， 反复执行堆栈会崩溃
+  // 先加上组件
   {
     path: '/',
-    to: '/login',
+    // to: '/login',
+    component: Login,
     exact: true
   },
   {
-    path: '/login',
+    path: 'login',
     component: Login,
     exact: false
   },
   {
-    path: '/layout',
+    path: 'layout',
     component: Layout,
     exact: false,
     children: [
       {
-        path: '/layout/menu',
+        path: 'menu',
         component: Menu,
         exact: false
       },
       {
-        path: '/layout/role',
+        path: 'role',
         component: Role,
         exact: false
       },
       {
-        path: '/layout/admin',
+        path: 'admin',
         component: Admin,
         exact: false
       },
 
       {
-        path: '/layout/category',
+        path: 'category',
         component: Commodity,
         exact: false
       },
       {
-        path: '/layout/specs',
+        path: 'specs',
         component: SpecsCation,
         exact: false
       },
       {
-        path: '/layout/goods',
+        path: 'goods',
         component: Goods,
         exact: false
       },
       {
-        path: '/layout/member',
+        path: 'member',
         component: Member,
         exact: false
       },
       {
-        path: '/layout/banner',
+        path: 'banner',
         component: Banner,
         exact: false
       },
       {
-        path: '/layout/seckill',
+        path: 'seckill',
         component: Seckill,
         exact: false
       },
 
 
       {
-        path: '/layout/tiao',
+        path: 'tiao',
         component: Tiao,
         exact: false
       },
 
 
       {
-        path: '/layout/Wangedit',
+        path: 'Wangedit',
         component: Wangedit,
         exact: false
       },
       {
-        path: '/layout/echarts',
+        path: 'echarts',
         component: Echarts,
         exact: false
       },

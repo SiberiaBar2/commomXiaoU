@@ -11,17 +11,22 @@ import './index.css'
 const Layout = (props) => {
   const [headerWidth, setHeaderWidth] = useState(false)
   const {
-    allData,
-    location
+    allData
   } = props
   // 所有路由配置相关的都会在props上
-  const { pathname } = location
+  // react-router v6不再支持
+  console.log('props', props);
+
   useEffect(() => {
   }, [])
 
   // 取出二级路由数组
-  const sercondRouter = routes.findIndex(item => item.path === '/layout')
-  const secondChildren = sercondRouter !== -1 && routes[sercondRouter].children
+  let secondChildren = []
+  for (const value of routes) {
+    if (value.hasOwnProperty('children')) {
+      secondChildren = value.children
+    }
+  }
 
   const navUseFunction = (val) => {
     setHeaderWidth(val)
@@ -40,20 +45,20 @@ const Layout = (props) => {
 
   const renderSec = () => {
     return (
-      (secondChildren && pathname !== '/layout')
-        ? (
-          <Suspense fallback={<div style={{ textAlign: 'center' }}><Spin size="large" /></div>}>
-            <div className={cx('rigth-content')}>
-              <div className={cx('content-border')}>
-                <RouterView routes={secondChildren} />
-              </div>
-            </div>
-          </Suspense>
-        )
-        : <div className={cx('love')}>I love Mountain wind ,<br />
-          Summer rain <br />
-          And your smile .
-        </div>
+      // n 个路由组件 等待被调起
+      // layoutPage
+      //   ? <div className={cx('love')}>I love Mountain wind ,<br />
+      //     Summer rain <br />
+      //     And your smile .
+      //   </div>
+      //   : 
+      <div className={cx('rigth-content')}>
+        <Suspense fallback={<div style={{ textAlign: 'center' }}><Spin size="large" /></div>}>
+          <div className={cx('content-border')}>
+            <RouterView routes={secondChildren} />
+          </div>
+        </Suspense>
+      </div>
     )
   }
 
