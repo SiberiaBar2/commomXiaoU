@@ -52,7 +52,7 @@ const Layout = (props) => {
       //     And your smile .
       //   </div>
       //   : 
-      <div className={cx('rigth-content')}>
+      <div className={cx('rigth-content', { moreLong: headerWidth === true })}>
         <Suspense fallback={<div style={{ textAlign: 'center' }}><Spin size="large" /></div>}>
           <div className={cx('content-border')}>
             <RouterView routes={secondChildren} />

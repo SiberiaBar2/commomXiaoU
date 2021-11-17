@@ -27,7 +27,7 @@ import {
 import cx from 'classnames'
 import './index.css'
 
-const Popup =  React.lazy(() => import('pages/conponents/Popup'))
+const Popup = React.lazy(() => import('pages/conponents/Popup'))
 
 
 const Menu = (props) => {
@@ -76,7 +76,7 @@ const Menu = (props) => {
         await menuTree()
       }
       setShow(false)
-    },[])
+    }, [])
 
   return (
     <div className={cx('menu-list')}>

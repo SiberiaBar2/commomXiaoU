@@ -63,27 +63,38 @@ const RoleWindow = (props, ref) => {
     setEventType(type)
   }
   // 渲染树形节点
-  const chilDrenData = (childrenList) => {
-    return (
-      function () {
-        return childrenList.map((ele) => {
-          let eleObj = {}
-          eleObj['key'] = ele.id.toString()
-          return { ...ele, ...eleObj }
-        })
-      }()
-    )
-  }
+  // const chilDrenData = (childrenList) => {
+  //   return (
+  //     function () {
+  //       return childrenList.map((ele) => {
+  //         let eleObj = {}
+  //         eleObj['key'] = ele.id.toString()
+  //         return { ...ele, ...eleObj }
+  //       })
+  //     }()
+  //   )
+  // }
   const getMenuList = async () => {
     const result = await menuList({})
     const { list } = result
+    console.log('list', list);
+
     const copyTreeData = JSON.parse(JSON.stringify(list))
-    let addWords = copyTreeData.map((item) => {
-      let emptyObj = {}
-      emptyObj['key'] = item.id.toString()
-      item.children = chilDrenData(item.children)
-      return { ...item, ...emptyObj }
-    })
+    // let addWords
+    const commonDeep = (copyTreeData) => {
+      return copyTreeData.map((item) => {
+        let emptyObj = {}
+        emptyObj['key'] = item.id.toString()
+        // 此处后面改为递归
+        if (item.hasOwnProperty('children')) {
+          item.children = commonDeep(item.children)
+        }
+        // item.children = chilDrenData(item.children)
+        return { ...item, ...emptyObj }
+      })
+    }
+
+    let addWords = commonDeep(copyTreeData)
     addWords && setTreeData(addWords)
   }
 
@@ -126,6 +137,19 @@ const RoleWindow = (props, ref) => {
       return newState
     })
   }
+
+  const treeConfig = {
+    checkable: true,
+    className: "roletree",
+    onExpand: onExpand,
+    expandedKeys: expandedKeys,
+    autoExpandParent: autoExpandParent,
+    onCheck: onCheck,
+    checkedKeys: state.menus,
+    onSelect: onSelect,
+    selectedKeys: selectedKeys,
+    treeData: treeData
+  }
   return (
     <>
       <Modal
@@ -137,18 +161,7 @@ const RoleWindow = (props, ref) => {
           addonBefore="角色名称"
           value={state.rolename}
           onChange={(e) => roleNameChange(e.target.value)} />
-        <Tree
-          checkable
-          className="roletree"
-          onExpand={onExpand}
-          expandedKeys={expandedKeys}
-          autoExpandParent={autoExpandParent}
-          onCheck={onCheck}
-          checkedKeys={state.menus}
-          onSelect={onSelect}
-          selectedKeys={selectedKeys}
-          treeData={treeData}
-        />
+        <Tree {...treeConfig} />
         <Radio.Group onChange={radioChange} value={state.status}>
           <Radio value={1}>正常</Radio>
           <Radio value={2}>禁用</Radio>

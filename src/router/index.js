@@ -30,7 +30,7 @@ const routes = [
   // 先加上组件
   {
     path: '/',
-    // to: '/login',
+    to: '/login',
     component: Login,
     exact: true
   },

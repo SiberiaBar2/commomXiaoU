@@ -1,10 +1,10 @@
 import React, { Suspense } from 'react'
+import { HashRouter as Router } from 'react-router-dom'
+import { Spin } from 'antd'
 import routes from 'router'
 import RouterView from 'router/RouterView'
-import { Spin } from 'antd'
-import { HashRouter as Router } from 'react-router-dom'
 
-const Summary = (props) => {
+const Summary = () => {
   return (
     <Router>
       <Suspense fallback={<div style={{ textAlign: 'center' }}><Spin size="large" /></div>}>

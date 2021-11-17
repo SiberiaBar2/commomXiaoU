@@ -2,25 +2,14 @@ import { Routes, Route } from 'react-router-dom'
 const RouterView = ({
   routes
 }) => {
-  const commonRender = ({ item, index }, type) => {
-    return (
-      item.component &&
-      (
-        type
-          ? <Route key={index} path={`${item.path}/*`} exact={item.exact} element={<item.component />} />
-          : <Route key={index} path={item.path} exact={item.exact} element={<item.component />} />
-      )
-    )
-  }
-
   return (
     <>
       <Routes>
         {routes.map((item, index) => {
           if (item.hasOwnProperty('children')) {
-            return commonRender({ item, index }, 'sec')
+            return <Route key={index} exact={item.exact} path={`${item.path}/*`} element={<item.component />} />
           } else {
-            return commonRender({ item, index })
+            return <Route key={index} exact={item.exact} path={item.path} element={<item.component />} />
           }
         })}
       </Routes>

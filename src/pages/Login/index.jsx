@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { Form, Input, Button, message } from 'antd';
 import { userLogin } from 'request'
-import { useNavigate  } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { initMethod } from 'store/actions'
 
 import cx from 'classnames'
@@ -16,7 +16,7 @@ const Login = ({
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   let navigate = useNavigate();
-  
+
   const limitData = async () => {
     let result = await userLogin({ params: { username, password } })
     if (result) {

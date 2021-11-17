@@ -52,4 +52,9 @@
   width: calc(100% - 226px);
   padding: 12px 15px;
   background: #e9eef3;
+  transition: 0.4s;
+}
+.moreLong {
+  width: calc(100% - 80px);
+  transition: 0.4s;
 }
